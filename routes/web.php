@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\StudentLoginController;
+use App\Http\Controllers\TeacherLoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +18,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+// Routes for student login
+Route::get('/login/student', [StudentLoginController::class, 'showLoginForm'])->name('student.login');
+Route::post('/login/student', [StudentLoginController::class, 'login'])->name('student.login.submit');
+
+// Routes for teacher login
+Route::get('/login/teacher', [TeacherLoginController::class, 'showLoginForm'])->name('teacher.login');
+Route::post('/login/teacher', [TeacherLoginController::class, 'login'])->name('teacher.login.submit');
