@@ -51,3 +51,6 @@ Route::resource('articles', ArticleController::class);
 
 // CRUD Teachers
 Route::resource('teachers', TeacherController::class);
+
+// CRUD Students
+Route::resource('students', StudentController::class);
