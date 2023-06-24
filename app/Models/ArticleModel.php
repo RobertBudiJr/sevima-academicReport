@@ -12,6 +12,7 @@ class ArticleModel extends Model
     use HasFactory;
     protected $table='article_tb';
     protected $primaryKey='id';
+    public $timestamps=false;
 
     public function teacher()
     {

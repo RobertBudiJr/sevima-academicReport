@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Models\ClassModel;
 
 class TeacherModel extends Authenticatable
 {
@@ -12,6 +13,16 @@ class TeacherModel extends Authenticatable
     protected $table='teacher_tb';
     protected $primaryKey='id';
     public $timestamps=false;
+
+    public function teacher()
+    {
+        return $this->belongsTo(TeacherModel::class, 'id_teacher');
+    }
+
+    public function class()
+    {   
+        return $this->belongsTo(ClassModel::class, 'id_class');
+    }
     /**
      * The attributes that are mass assignable.
      *
