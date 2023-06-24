@@ -48,6 +48,8 @@ Route::resource('classes', ClassController::class);
 
 // CRUD Articles
 Route::resource('articles', ArticleController::class);
+// Route::post('articles/generate', 'ArticleController@generate')->name('articles.generate');
+Route::post('/generate-article', [ArticleController::class, 'generateArticle']);
 
 // CRUD Teachers
 Route::resource('teachers', TeacherController::class);

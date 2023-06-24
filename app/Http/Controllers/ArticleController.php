@@ -24,24 +24,56 @@ class ArticleController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'id_teacher' => 'required',
-            'id_class' => 'required',
-            'title' => 'required',
-            'content' => 'required',
-            'published_at' => 'required|date'
-        ]);
+        $title = $request->input('title');
+        $idTeacher = $request->input('id_teacher');
+        $idClass = $request->input('id_class');
+        $publishedAt = $request->input('published_at');
+        $subject = $request->input('subject');
 
-        ArticleModel::create([
-            'id_teacher' => $request->input('id_teacher'),
-            'id_class' => $request->input('id_class'),
-            'title' => $request->input('title'),
-            'content' => $request->input('content'),
-            'published_at' => $request->input('published_at'),
-            'subject' => $request->input('subject')
-        ]);
+        // Generate article content using OpenAI API
+        $articleContent = $this->generateArticleContent($title);
+
+        // Save the generated content and other fields to the database
+        $article = new Article();
+        $article->title = $title;
+        $article->content = $articleContent;
+        $article->id_teacher = $idTeacher;
+        $article->id_class = $idClass;
+        $article->published_at = $publishedAt;
+        $article->subject = $subject;
+        $article->save();
 
         return redirect()->route('articles.index')->with('success', 'Article created successfully.');
+    }
+
+    public function generateArticle(Request $request)
+    {
+        $title = $request->input('title');
+
+        // Make a request to the OpenAI API
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer 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',
+            'Content-Type' => 'application/json',
+        ])->post('https://api.openai.com/v1/engines/davinci-codex/completions', [
+            'prompt' => 'Title: ' . $title . '\nGenerate article:',
+            'max_tokens' => 200,
+        ]);
+
+        $content = $response->json('choices.0.text');
+
+        return response()->json([
+            'generatedContent' => $content,
+        ]);
+    }
+
+    public function generate(Request $request)
+    {
+        $title = $request->input('title');
+
+        // Generate article content using OpenAI API
+        $articleContent = $this->generateArticleContent($title);
+
+        return response()->json(['content' => $articleContent]);
     }
 
     public function show(ArticleModel $article)
