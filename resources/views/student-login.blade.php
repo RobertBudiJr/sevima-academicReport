@@ -19,14 +19,12 @@
                         @endif
                         <form method="POST" action="{{ route('student.login') }}">
                             @csrf
-                            <div class="input-group mb-3">
-                                <input type="text" class="form-control" placeholder="Username" aria-label="Student's username" aria-describedby="basic-addon" name="username">
-                            </div>
-                            <div class="input-group mb-3">
-                                <input type="password" class="form-control" placeholder="Password" aria-label="Student's password" aria-describedby="basic-addon2" name="username">
-                            </div>
-                            <button class="btn btn-primary" type="submit">Login</button>
+                            <input type="text" class="form-control mb-3" placeholder="Username" name="username">
+                            <input type="password" class="form-control mb-3" placeholder="Password" name="password">
+                            <button class="btn btn-primary mb-3" type="submit">Login</button>
                         </form>
+
+                        <a href="{{ route('teacher.login') }}">Log In as Teacher</a>
                     </div>
                 </div>
             </div>

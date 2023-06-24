@@ -20,10 +20,12 @@
                         @endif
                         <form method="POST" action="{{ route('teacher.login') }}">
                             @csrf
-                            <input type="text" name="username" placeholder="Username">
-                            <input type="password" name="password" placeholder="Password">
-                            <button type="submit">Login</button>
+                            <input type="text" class="form-control mb-3" placeholder="Username" name="username">
+                            <input type="password" class="form-control mb-3" placeholder="Password" name="password">
+                            <button class="btn btn-primary mb-3" type="submit">Login</button>
                         </form>
+
+                        <a href="{{ route('student.login') }}">Log In as Student</a>
                     </div>
                 </div>
             </div>

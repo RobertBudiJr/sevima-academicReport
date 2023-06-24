@@ -1,35 +1,33 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Student Dashboard</title>
-    <!-- Include Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
-</head>
-<body>
+@extends('layouts.app')
+
+@section('content')
     <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container">
-                <span class="navbar-brand">Welcome, {{ $student->student_name }}</span>
-                <span class="navbar-text">Class: {{ $class->class_name }}</span>
-            </div>
-        </nav>
+        <h1>Welcome, {{ session('student_name') }}</h1>
+        <h2>{{ session('class_name') }}</h2>
     </header>
-
-    <div class="container mt-3">
-        <h2>Articles</h2>
-        <hr>
-
+    <div class="row">
         @foreach ($articles as $article)
-            <div class="card mb-3">
-                <div class="card-body">
-                    <h5 class="card-title">{{ $article->title }}</h5>
-                    <p class="card-text">{{ $article->content }}</p>
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-header">
+                        {{ $article->title }}
+                    </div>
+                    <div class="card-body">
+                        {{ $article->content }}
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-muted">{{ $article->subject }}</small>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-muted">Teacher: {{ $article->teacher->teacher_name }}</small>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-muted">Published at: {{ $article->published_at }}</small>
+                    </div>
                 </div>
             </div>
         @endforeach
     </div>
 
-    <!-- Include Bootstrap JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+    <!-- Rest of the content -->
+@endsection

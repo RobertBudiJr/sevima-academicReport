@@ -24,7 +24,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/student/dashboard', [DashboardController::class, 'dashboardStudent'])->name('student.dashboard');
+// Route::get('/student/dashboard', function () {
+//     return view('student-dashboard');
+// });
+Route::get('/student/dashboard', [StudentController::class, 'dashboard'])->name('student.dashboard');
 Route::get('/teacher/dashboard', function () {
     return view('teacher-dashboard');
 });

@@ -14,23 +14,4 @@ class DashboardController extends Controller
     {
         return view('dashboard');
     }
-
-    public function dashboardStudent()
-    {
-        $student = StudentModel::find(Auth::id());
-
-        if (!$student) {
-            return redirect()->back()->with('error', 'Student not found.');
-        }
-
-        $class = ClassModel::find($student->class_id);
-
-        if (!$class) {
-            return redirect()->back()->with('error', 'Class not found.');
-        }
-
-        $articles = ArticleModel::where('id_class', $class->id)->get();
-
-        return view('student-dashboard', compact('student', 'class', 'articles'));
-    }
 }

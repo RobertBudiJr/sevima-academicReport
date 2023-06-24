@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\StudentModel;
 use App\Models\ClassModel;
+use App\Models\ArticleModel;
+use App\Models\TeacherModel;
 use Auth;
 
 class StudentController extends Controller
@@ -27,8 +29,25 @@ class StudentController extends Controller
             // Store the student's name in the session
             $request->session()->put('student_name', $student->student_name);
 
+            // Retrieve the class information for the student
+            $class = $student->class; // Assuming 'class' is the relationship method in StudentModel
+
+            // Store the class name in the session
+            $request->session()->put('class_name', $class->class_name);
+
+            // Retrieve all articles with the same id_class and their associated teachers
+            $articles = ArticleModel::where('id_class', $class->id)
+            ->with('teacher')
+            ->get();
+
+            // Store the articles in the session
+            $request->session()->put('articles', $articles);
+
             // Student login successful
-            return redirect()->intended('/student/dashboard')->with('success', 'Login successful!');
+            return redirect()->intended('/student/dashboard')->with([
+                'success' => 'Login successful!',
+                'articles' => $articles, // Pass the articles as a parameter
+            ]);
         }
 
         // Student login failed
