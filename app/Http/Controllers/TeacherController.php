@@ -6,57 +6,35 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\TeacherModel;
 use App\Models\ClassModel;
+use Auth;
 
 class TeacherController extends Controller
 {
-    // public function showLoginForm()
-    // {
-    //     return view('auth.teacher-login');
-    // }
+    // Display the teacher login form
+    public function showLoginForm()
+    {
+        return view('teacher-login');
+    }
 
-    // public function login(Request $request)
-    // {
-    //     // Validate the login request
-    //     $credentials = $request->only('username', 'password');
+    public function login(Request $request)
+    {
+        $credentials = $request->only('username', 'password');
 
-    //     if (auth()->guard('teacher')->attempt($credentials)) {
-    //         // Authentication successful
-    //         return redirect()->intended('/dashboard');
-    //     } else {
-    //         // Authentication failed
-    //         return redirect()->back()->with('status', 'Invalid credentials.');
-    //     }
-    // }
+        if (Auth::guard('teacher')->attempt($credentials)) {
+            // Retrieve the authenticated teacher
+            $teacher = TeacherModel::where('username', $credentials['username'])->first();
 
-    // public function showRegistrationForm()
-    // {
-    //     return view('auth.teacher-register');
-    // }
+            // Store the teacher's name in the session
+            $request->session()->put('teacher_name', $teacher->teacher_name);
 
-    // public function register(Request $request)
-    // {
-    //     // Validate the registration request
-    //     $validatedData = $request->validate([
-    //         'teacher_name' => 'required|string|max:255',
-    //         'id_class' => 'required|integer',
-    //         'username' => 'required|string|unique:teacher_tb',
-    //         'password' => 'required|string|min:6|confirmed',
-    //     ]);
+            // Teacher login successful
+            return redirect()->intended('/teacher/dashboard')->with('success', 'Login successful!');
+        }
 
-    //     // Create a new teacher record
-    //     $teacher = Teacher::create([
-    //         'teacher_name' => $validatedData['teacher_name'],
-    //         'id_class' => $validatedData['id_class'],
-    //         'username' => $validatedData['username'],
-    //         'password' => bcrypt($validatedData['password']),
-    //     ]);
+        // Teacher login failed
+        return redirect()->back()->with('error', 'Invalid credentials');
+    }
 
-    //     // Log in the newly registered teacher
-    //     auth()->guard('teacher')->login($teacher);
-
-    //     // Redirect to the teacher's dashboard or any other desired location
-    //     return redirect('/dashboard');
-    // }
     public function index()
 {
     $teachers = TeacherModel::all();

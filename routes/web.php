@@ -22,15 +22,20 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
+Route::get('/student/dashboard', function () {
+    return view('student-dashboard');
+});
+Route::get('/teacher/dashboard', function () {
+    return view('teacher-dashboard');
+});
 
 // Routes for student login
-Route::get('/login/student', [StudennController::class, 'showLoginForm'])->name('student.login');
-Route::post('/login/student', [StudentController::class, 'login'])->name('student.login.submit');
+Route::get('student/login', [StudentController::class, 'showLoginForm'])->name('student.login');
+Route::post('student/login', [StudentController::class, 'login']);
 
 // Routes for teacher login
-Route::get('/login/teacher', [TeacherController::class, 'showLoginForm'])->name('teacher.login');
-Route::post('/login/teacher', [TeacherController::class, 'login'])->name('teacher.login.submit');
+Route::get('teacher/login', [TeacherController::class, 'showLoginForm'])->name('teacher.login');
+Route::post('teacher/login', [TeacherController::class, 'login']);
 
 // Teacher Register Route
 Route::get('/register/teacher', [TeacherController::class, 'showRegistrationForm'])->name('teacher.register');

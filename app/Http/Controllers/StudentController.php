@@ -6,72 +6,48 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\StudentModel;
 use App\Models\ClassModel;
+use Auth;
 
 class StudentController extends Controller
 {
-    // public function showLoginForm()
-    // {
-    //     return view('auth.student-login');
-    // }
+    // Display the student login form
+    public function showLoginForm()
+    {
+        return view('student-login');
+    }
 
-    // public function login(Request $request)
-    // {
-    //     // Validate the login request
-    //     $credentials = $request->only('username', 'password');
+    public function login(Request $request)
+    {
+        $credentials = $request->only('username', 'password');
 
-    //     if (auth()->guard('student')->attempt($credentials)) {
-    //         // Authentication successful
-    //         return redirect()->intended('/dashboard');
-    //     } else {
-    //         // Authentication failed
-    //         return redirect()->back()->with('status', 'Invalid credentials.');
-    //     }
-    // }
+        if (Auth::guard('student')->attempt($credentials)) {
+            // Retrieve the authenticated student
+            $student = StudentModel::where('username', $credentials['username'])->first();
 
-    // public function showRegistrationForm()
-    // {
-    //     $classes = ClassModel::all();
+            // Store the student's name in the session
+            $request->session()->put('student_name', $student->student_name);
 
-    //     return view('auth.student-register', compact('classes'));
-    // }
+            // Student login successful
+            return redirect()->intended('/student/dashboard')->with('success', 'Login successful!');
+        }
 
-    // public function register(Request $request)
-    // {
-    //     // Validate the registration request
-    //     $validatedData = $request->validate([
-    //         'student_name' => 'required|string|max:255',
-    //         'id_class' => 'required|integer',
-    //         'username' => 'required|string|unique:student_tb',
-    //         'password' => 'required|string|min:6|confirmed',
-    //     ]);
+        // Student login failed
+        return redirect()->back()->with('error', 'Invalid credentials');
+    }
 
-    //     // Create a new student record
-    //     $student = Student::create([
-    //         'student_name' => $validatedData['student_name'],
-    //         'id_class' => $validatedData['id_class'],
-    //         'username' => $validatedData['username'],
-    //         'password' => bcrypt($validatedData['password']),
-    //     ]);
-
-    //     // Log in the newly registered student
-    //     auth()->guard('student')->login($student);
-
-    //     // Redirect to the student's dashboard or any other desired location
-    //     return redirect('/dashboard');
-    // }
     public function index()
-{
-    $students = StudentModel::all();
-    return view('students.index', compact('students'));
-}
+    {
+        $students = StudentModel::all();
+        return view('students.index', compact('students'));
+    }
 
-public function create()
-{
-    return view('students.create');
-}
+    public function create()
+    {
+        return view('students.create');
+    }
 
-public function store(Request $request)
-{
+    public function store(Request $request)
+    {
     $validatedData = $request->validate([
         'student_name' => 'required',
         'id_class' => 'required',
@@ -82,7 +58,7 @@ public function store(Request $request)
     StudentModel::create($validatedData);
 
     return redirect()->route('students.index')->with('success', 'Student created successfully.');
-}
+    }
 
 public function show(StudentModel $student)
 {
