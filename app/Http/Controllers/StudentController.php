@@ -35,18 +35,18 @@ class StudentController extends Controller
             // Store the class name in the session
             $request->session()->put('class_name', $class->class_name);
 
-            // Retrieve all articles with the same id_class and their associated teachers
-            $articles = ArticleModel::where('id_class', $class->id)
-            ->with('teacher')
-            ->get();
+            // Retrieve the articles for the student's class
+            $articles = ArticleModel::where('id_class', $class->id)->get();
 
-            // Store the articles in the session
-            $request->session()->put('articles', $articles);
+            // Retrieve the teacher for each article
+            foreach ($articles as $article) {
+                $teacher = TeacherModel::find($article->id_teacher);
+                $article->teacher_name = $teacher->teacher_name;
+            }
 
             // Student login successful
-            return redirect()->intended('/student/dashboard')->with([
-                'success' => 'Login successful!',
-                'articles' => $articles, // Pass the articles as a parameter
+            return view('student-dashboard', compact('articles'))->with([
+                'success' => 'Login successful!'
             ]);
         }
 
