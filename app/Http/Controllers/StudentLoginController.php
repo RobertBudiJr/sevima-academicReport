@@ -15,7 +15,6 @@ class StudentLoginController extends Controller
     public function login(Request $request)
     {
         // Validate the login request
-
         $credentials = $request->only('username', 'password');
 
         if (auth()->guard('student')->attempt($credentials)) {
@@ -23,7 +22,7 @@ class StudentLoginController extends Controller
             return redirect()->intended('/dashboard');
         } else {
             // Authentication failed
-            return redirect()->back()->withErrors(['Invalid credentials']);
+            return redirect()->back()->with('status', 'Invalid credentials.');
         }
     }
 }
