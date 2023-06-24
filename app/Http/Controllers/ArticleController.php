@@ -24,24 +24,42 @@ class ArticleController extends Controller
 
     public function store(Request $request)
     {
-        $title = $request->input('title');
-        $idTeacher = $request->input('id_teacher');
-        $idClass = $request->input('id_class');
-        $publishedAt = $request->input('published_at');
-        $subject = $request->input('subject');
+        // $title = $request->input('title');
+        // $idTeacher = $request->input('id_teacher');
+        // $idClass = $request->input('id_class');
+        // $publishedAt = $request->input('published_at');
+        // $subject = $request->input('subject');
 
-        // Generate article content using OpenAI API
-        $articleContent = $this->generateArticleContent($title);
+        // // Generate article content using OpenAI API
+        // $articleContent = $this->generateArticleContent($title);
 
-        // Save the generated content and other fields to the database
-        $article = new Article();
-        $article->title = $title;
-        $article->content = $articleContent;
-        $article->id_teacher = $idTeacher;
-        $article->id_class = $idClass;
-        $article->published_at = $publishedAt;
-        $article->subject = $subject;
-        $article->save();
+        // // Save the generated content and other fields to the database
+        // $article = new Article();
+        // $article->title = $title;
+        // $article->content = $articleContent;
+        // $article->id_teacher = $idTeacher;
+        // $article->id_class = $idClass;
+        // $article->published_at = $publishedAt;
+        // $article->subject = $subject;
+        // $article->save();
+
+        // return redirect()->route('articles.index')->with('success', 'Article created successfully.');
+        $request->validate([
+            'id_teacher' => 'required',
+            'id_class' => 'required',
+            'title' => 'required',
+            'content' => 'required',
+            'published_at' => 'required|date'
+        ]);
+
+        ArticleModel::create([
+            'id_teacher' => $request->input('id_teacher'),
+            'id_class' => $request->input('id_class'),
+            'title' => $request->input('title'),
+            'content' => $request->input('content'),
+            'published_at' => $request->input('published_at'),
+            'subject' => $request->input('subject')
+        ]);
 
         return redirect()->route('articles.index')->with('success', 'Article created successfully.');
     }
