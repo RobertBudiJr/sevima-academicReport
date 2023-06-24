@@ -5,6 +5,7 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\ClassController;
+use App\Http\Controllers\ArticleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,3 +45,6 @@ Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
 
 // CRUD Class
 Route::resource('classes', ClassController::class);
+
+// CRUD Articles
+Route::resource('articles', ArticleController::class);

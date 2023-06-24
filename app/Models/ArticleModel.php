@@ -4,12 +4,24 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\TeacherModel;
+use App\Models\ClassModel;
 
 class ArticleModel extends Model
 {
     use HasFactory;
     protected $table='article_tb';
     protected $primaryKey='id';
+
+    public function teacher()
+    {
+        return $this->belongsTo(TeacherModel::class, 'id_teacher');
+    }
+
+    public function class()
+    {   
+        return $this->belongsTo(ClassModel::class, 'id_class');
+    }
 
     /**
      * The attributes that are mass assignable.
