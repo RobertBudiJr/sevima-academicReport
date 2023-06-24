@@ -61,7 +61,6 @@
 </form>
 @endsection
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/guzzle.js/0.14.0/guzzle.min.js"></script>
 <script>
     function generateArticle() {
         const title = document.getElementById('title').value;

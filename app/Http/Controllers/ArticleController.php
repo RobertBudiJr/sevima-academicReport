@@ -52,9 +52,9 @@ class ArticleController extends Controller
 
         // Make a request to the OpenAI API
         $response = Http::withHeaders([
-            'Authorization' => 'Bearer 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',
+            'Authorization' => 'Bearer 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',
             'Content-Type' => 'application/json',
-        ])->post('https://api.openai.com/v1/engines/davinci-codex/completions', [
+        ])->post('https://api.openai.com/v1/engines/text-davinci-003/completions', [
             'prompt' => 'Title: ' . $title . '\nGenerate article:',
             'max_tokens' => 200,
         ]);
@@ -64,16 +64,6 @@ class ArticleController extends Controller
         return response()->json([
             'generatedContent' => $content,
         ]);
-    }
-
-    public function generate(Request $request)
-    {
-        $title = $request->input('title');
-
-        // Generate article content using OpenAI API
-        $articleContent = $this->generateArticleContent($title);
-
-        return response()->json(['content' => $articleContent]);
     }
 
     public function show(ArticleModel $article)
