@@ -3,11 +3,31 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\TeacherModel;
 use Illuminate\Http\Request;
+use App\Models\TeacherModel;
+use App\Models\ClassModel;
 
-class TeacherRegisterController extends Controller
+class TeacherLoginController extends Controller
 {
+    public function showLoginForm()
+    {
+        return view('auth.teacher-login');
+    }
+
+    public function login(Request $request)
+    {
+        // Validate the login request
+        $credentials = $request->only('username', 'password');
+
+        if (auth()->guard('teacher')->attempt($credentials)) {
+            // Authentication successful
+            return redirect()->intended('/dashboard');
+        } else {
+            // Authentication failed
+            return redirect()->back()->with('status', 'Invalid credentials.');
+        }
+    }
+
     public function showRegistrationForm()
     {
         return view('auth.teacher-register');
