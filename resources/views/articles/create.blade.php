@@ -40,7 +40,7 @@
         <input type="text" name="title" id="title" class="form-control">
     </div>
 
-    <button type="button" class="btn btn-primary" onclick="generateArticle()">Generate Article</button>
+    <button type="button" class="btn btn-primary" id="generateContentBtn"">Generate Article</button>
 
     <div class="form-group">
         <label for="content">Content</label>
@@ -62,22 +62,32 @@
 @endsection
 
 <script>
-    function generateArticle() {
-        const title = document.getElementById('title').value;
+        document.addEventListener('DOMContentLoaded', function () {
+            var generateContentBtn = document.getElementById('generateContentBtn');
+            if (generateContentBtn) {
+                generateContentBtn.addEventListener('click', function () {
+                    var title = document.getElementById('title').value;
 
-        // Make a request to the server-side endpoint
-        fetch('/generate-article', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-            },
-            body: JSON.stringify({ title })
-        })
-        .then(response => response.json())
-        .then(data => {
-            document.getElementById('content').value = data.generatedContent;
-        })
-        .catch(error => console.error(error));
-    }
+                    // Make an AJAX request to generate the article content
+                    // Replace the API_ENDPOINT with your actual API endpoint
+                    var apiEndpoint = 'API_ENDPOINT';
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('POST', apiEndpoint);
+                    xhr.setRequestHeader('Content-Type', 'application/json');
+                    xhr.onload = function () {
+                        if (xhr.status === 200) {
+                            var response = JSON.parse(xhr.responseText);
+                            var contentField = document.getElementById('content');
+                            contentField.value = response.content;
+                        } else {
+                            console.error('Error generating content:', xhr.status, xhr.statusText);
+                        }
+                    };
+                    xhr.onerror = function () {
+                        console.error('Error generating content:', xhr.status, xhr.statusText);
+                    };
+                    xhr.send(JSON.stringify({ title: title }));
+                });
+            }
+        });
 </script>

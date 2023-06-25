@@ -7,7 +7,7 @@ use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\ClassController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\DashboardController;
-
+use App\Http\Controllers\ArticleGeneratorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -55,8 +55,8 @@ Route::resource('classes', ClassController::class);
 
 // CRUD Articles
 Route::resource('articles', ArticleController::class);
-// Route::post('articles/generate', 'ArticleController@generate')->name('articles.generate');
-Route::post('/generate-article', [ArticleController::class, 'generateArticle']);
+
+Route::post('/write/generate', [ArticleGeneratorController::class, 'index']);
 
 // CRUD Teachers
 Route::resource('teachers', TeacherController::class);
