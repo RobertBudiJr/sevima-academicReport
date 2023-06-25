@@ -6,17 +6,17 @@ Access a vast repository of study materials tailored to your academic needs. Cre
 
 ## Installation
 
-First, we need to clone this repository
+1. First, we need to clone this repository
 
 ```bash
 git clone https://github.com/RobertBudiJr/sevima-material.edu
 ```
 
-Import the database to MySQL Admin
+2. Import the database to MySQL Admin
 
-Run xampp, or other server tool
+3. Run xampp, or other server tool
 
-And then we install all the dependency
+4. And then we install all the dependency
 
 ```bash
 composer i
@@ -26,7 +26,7 @@ composer i
 npm i
 ```
 
-Run laravel application
+5. Run laravel application
 
 ```bash
 php artisan serve
@@ -38,19 +38,23 @@ Material.edu is website that provide study material for students, the study mate
 
 ## Feature List
 
-Student
+#Student
 
 <li>CRUD</li>
 <li>Login</li>
 <li>Student Dashboard</li>
 <li>Get Published Article</li>
 
-Teacher
+####
+
+#Teacher
 
 <li>CRUD Teacher, Student, Article, and Class</li>
 <li>Login</li>
 <li>Teacher Dashboard</li>
 <li>Generate Content by Given Title(unfinished)</li>
+
+###
 
 <li>Logout</li>
 
@@ -66,6 +70,8 @@ Student
 
 <li>Username: robert.johnson</li>
 <li>Password: paassword789</li>
+
+###
 
 Teacher
 
