@@ -63,26 +63,26 @@ Material.edu is website that provide study material for students, the study mate
 Student
 
 <li>Username: john.doe</li>
-<li>Password: paassword123</li>
+<li>Password: password123</li>
 
 <li>Username: jane.smith</li>
-<li>Password: paassword456</li>
+<li>Password: password456</li>
 
 <li>Username: robert.johnson</li>
-<li>Password: paassword789</li>
+<li>Password: password789</li>
 
 ###
 
 Teacher
 
 <li>Username: john.smith</li>
-<li>Password: paassword123</li>
+<li>Password: password123</li>
 
 <li>Username: jane.johnson</li>
-<li>Password: paassword456</li>
+<li>Password: password456</li>
 
 <li>Username: robert.doe</li>
-<li>Password: paassword789</li>
+<li>Password: password789</li>
 
 ## Tools
 
